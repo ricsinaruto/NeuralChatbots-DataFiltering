@@ -1,0 +1,5 @@
+tensorflow-gpu
+tensor2tensor
+datasketch
+sklearn
+clint
