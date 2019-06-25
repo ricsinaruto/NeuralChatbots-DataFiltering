@@ -2,7 +2,7 @@ import os
 import numpy as np
 
 # My imports.
-from data_filtering.semantic_clustering import SemanticClustering
+from filtering.semantic_clustering import SemanticClustering
 
 
 class AverageWordEmbedding(SemanticClustering):

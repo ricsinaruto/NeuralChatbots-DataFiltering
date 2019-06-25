@@ -2,12 +2,9 @@ import argparse
 import json
 
 from utils.config import Config
-from utils import utils
-#from utils.utils import save_config_file
-#from filtering.average_word_embedding import AverageWordEmbedding
-#from filtering.identity import Identity
-#from filtering.unique_clustering import UniqueClustering
-#from filtering.sent2vec import Sent2vec
+from filtering.average_word_embedding import AverageWordEmbedding
+from filtering.identity import Identity
+from filtering.sent2vec import Sent2vec
 
 
 def main():
@@ -25,10 +22,18 @@ def main():
   parser.add_argument('-o', '--output_dir', default=config.output_dir,
                       help='Save here the filtered data and any output',
                       metavar='')
+  parser.add_argument('-l', '--load_config', default=config.load_config,
+                      help='Path to load config from file, or leave empty ' +
+                      '(default: %(default)s)',
+                      metavar='')
   parser.add_argument('-ds', '--dataset_split', default=config.dataset_split,
                       help='Dictionary containing train/val/test set ' +
                       'percentages (default: %(default)s)',
                       metavar='', type=json.loads)
+  parser.add_argument('-fs', '--filter_split', default=config.filter_split,
+                      help='Data split to filter, \'full\' filters ' +
+                      'all splits (choices: %(choices)s)',
+                      metavar='', choices=['full', 'train', 'dev', 'test'])
   parser.add_argument('-ct', '--cluster_type', default=config.cluster_type,
                       help='Clustering method (choices: %(choices)s)',
                       metavar='',
@@ -71,17 +76,18 @@ def main():
                       metavar='', type=int)
 
   parser.parse_args(namespace=config)
+  if config.load_config:
+    config.load()
   config.save()
-  config.load()
 
-  #filter_problems = {
-  #    "identity": Identity,
-  #    "avg_embedding": AverageWordEmbedding,
-  #    "sent2vec": Sent2vec,
-  #}
+  filter_problems = {
+      "identity": Identity,
+      "avg_embedding": AverageWordEmbedding,
+      "sent2vec": Sent2vec,
+  }
 
-  #problem = filter_problems[FLAGS["filter_problem"]]("full")
-  #problem.run()
+  problem = filter_problems[config.cluster_type](config)
+  problem.run()
 
 
 if __name__ == "__main__":

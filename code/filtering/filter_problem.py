@@ -59,12 +59,12 @@ class FilterProblem:
   def ClusterClass(self):
     return Cluster
 
-  def __init__(self, tag="full"):
+  def __init__(self, config):
     """
     Params:
       :tag: Can be either full, train, dev, or test.
     """
-    self.tag = tag
+    self.tag = config
     self.treshold = DATA_FILTERING["treshold"]
     self.max_avg_length = DATA_FILTERING["max_avg_length"]
     self.max_medoid_length = DATA_FILTERING["max_medoid_length"]

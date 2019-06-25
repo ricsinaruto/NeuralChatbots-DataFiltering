@@ -1,35 +1,21 @@
 import os
-import sys
-import pickle
 import numpy
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import MeanShift
 
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__))))
+#sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__))))
+from utils.config import Config
 
-
-# My imports.
-_use_faiss = False
-
-if _use_faiss== False:
+if Config.use_faiss:
   try:
     import faiss
-    _use_faiss = True
+    Config.faiss = True
 
   except ImportError:
     print('Failed to import faiss, using SKLearn clustering instead.')
 
-if not _use_faiss:
+if not Config.use_faiss:
   from sklearn.cluster import KMeans
-
-# Save the config.py file for a specific run.
-def save_config(config):
-  # Make the data dir if it doesn't exist.
-  if not os.path.exists(config.output_dir):
-    os.makedirs(config.output_dir)
-  f = open(os.path.join(config.output_dir, 'config'), 'wb')
-
-  pickle.dump(config, f)
 
 
 # Temporary helper function to load a vocabulary.
@@ -125,7 +111,7 @@ def calculate_centroids_kmeans(data_set, niter, n_clusters):
     :data_set: A set of vectors.
     :niter: Number of max iterations.
   """
-  if _use_faiss:
+  if Config.use_faiss:
     verbose = True
     d = data_set.shape[1]
     kmeans = faiss.Kmeans(d, n_clusters, niter, verbose)
@@ -159,7 +145,7 @@ def calculate_nearest_index(data, method):
   """
   Calculates the cluster centroid for the provided vector.
   """
-  if _use_faiss:
+  if Config.use_faiss:
     _, index = method.index.search(data, 1)
   else:
     index = method.predict(data)[0]
