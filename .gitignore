@@ -140,3 +140,5 @@ $RECYCLE.BIN/
 
 # Large files and folders
 private/
+data/
+responses/

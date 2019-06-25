@@ -1,6 +1,6 @@
 import os
 import sys
-import tensorflow as tf
+import pickle
 import numpy
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import MeanShift
@@ -9,10 +9,9 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__))))
 
 
 # My imports.
-from config import FLAGS
 _use_faiss = False
 
-if DATA_FILTERING['use_faiss']:
+if _use_faiss== False:
   try:
     import faiss
     _use_faiss = True
@@ -24,28 +23,18 @@ if not _use_faiss:
   from sklearn.cluster import KMeans
 
 # Save the config.py file for a specific run.
-def save_config_file(directory):
+def save_config(config):
   # Make the data dir if it doesn't exist.
-  if not os.path.exists(directory):
-    os.makedirs(directory)
+  if not os.path.exists(config.output_dir):
+    os.makedirs(config.output_dir)
+  f = open(os.path.join(config.output_dir, 'config'), 'wb')
 
-  # This will be used in the names of saved files.
-  now = datetime.datetime.now()
-  time_string = (str(now.year) + "." +
-                 str(now.month) + "." +
-                 str(now.day) + "." +
-                 str(now.hour) + "." +
-                 str(now.minute) + "." +
-                 str(now.second))
-
-  os.system("cp " + FLAGS["t2t_usr_dir"] + "/config.py " +
-            directory + "/config." + time_string + ".txt")
+  pickle.dump(config, f)
 
 
 # Temporary helper function to load a vocabulary.
-def load_vocab():
-  vocab = open(os.path.join(FLAGS["data_dir"],
-               "vocab.chatbot." + str(PROBLEM_HPARAMS["vocabulary_size"])))
+def load_vocab(config):
+  vocab = open()
   vocab_dict = {}
   # Read the vocab file.
   i = 0
@@ -153,14 +142,14 @@ def calculate_centroids_kmeans(data_set, niter, n_clusters):
   return centroids, kmeans
 
 
-def calculate_centroids_mean_shift(data_set):
+def calculate_centroids_mean_shift(config, data_set):
   """
   Clusters the provided dataset, using mean shift clustering.
 
   Params:
     :data_set: A set of vectors.
   """
-  mean_shift = MeanShift(bandwidth=DATA_FILTERING['mean_shift_bw'], n_jobs=10)
+  mean_shift = MeanShift(bandwidth=config.mean_shift_bw, n_jobs=10)
   mean_shift.fit(data_set)
 
   return mean_shift.cluster_centers_, mean_shift
