@@ -1,9 +1,9 @@
 
 # My imports.
-from data_filtering.filter_problem import FilterProblem
+from filtering.filter_problem import FilterProblem
 
 
-class IdentityClustering(FilterProblem):
+class Identity(FilterProblem):
   """
   Only cluster sentences that are exactly the same.
   """

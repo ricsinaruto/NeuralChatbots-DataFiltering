@@ -1,10 +1,9 @@
 import argparse
-import json
 
 from utils.config import Config
-from filtering.average_word_embedding import AverageWordEmbedding
+#from filtering.average_word_embedding import AverageWordEmbedding
 from filtering.identity import Identity
-from filtering.sent2vec import Sent2vec
+#from filtering.sent2vec import Sent2vec
 
 
 def main():
@@ -26,10 +25,6 @@ def main():
                       help='Path to load config from file, or leave empty ' +
                       '(default: %(default)s)',
                       metavar='')
-  parser.add_argument('-ds', '--dataset_split', default=config.dataset_split,
-                      help='Dictionary containing train/val/test set ' +
-                      'percentages (default: %(default)s)',
-                      metavar='', type=json.loads)
   parser.add_argument('-fs', '--filter_split', default=config.filter_split,
                       help='Data split to filter, \'full\' filters ' +
                       'all splits (choices: %(choices)s)',
@@ -38,6 +33,14 @@ def main():
                       help='Clustering method (choices: %(choices)s)',
                       metavar='',
                       choices=['identity', 'avg_embedding', "sent2vec"])
+  parser.add_argument('-sc', '--source_clusters',
+                      default=config.source_clusters,
+                      help='Number of source clusters in case of Kmeans',
+                      metavar='', type=int)
+  parser.add_argument('-tc', '--target_clusters',
+                      default=config.target_clusters,
+                      help='Number of target clusters in case of Kmeans',
+                      metavar='', type=int)
   parser.add_argument('-u', '--unique', default=config.unique,
                       help='Whether to cluster only unique sentences ' +
                       '(default: %(default)s)',
@@ -50,8 +53,8 @@ def main():
                       help='Clusters with fewer elements won\'t get filtered' +
                       ' (default: %(default)s)',
                       metavar='', type=int)
-  parser.add_argument('-t', '--treshold', default=config.treshold,
-                      help='Entropy treshold (default: %(default)s)',
+  parser.add_argument('-t', '--threshold', default=config.threshold,
+                      help='Entropy threshold (default: %(default)s)',
                       metavar='', type=int)
   parser.add_argument('-cm', '--clustering_method',
                       default=config.clustering_method,
@@ -81,9 +84,9 @@ def main():
   config.save()
 
   filter_problems = {
-      "identity": Identity,
-      "avg_embedding": AverageWordEmbedding,
-      "sent2vec": Sent2vec,
+      'identity': Identity,
+      #'avg_embedding': AverageWordEmbedding,
+      #'sent2vec': Sent2vec,
   }
 
   problem = filter_problems[config.cluster_type](config)
