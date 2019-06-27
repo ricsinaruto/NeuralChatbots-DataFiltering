@@ -11,30 +11,7 @@ class AverageWordEmbedding(SemanticClustering):
   sentence is created by the weighted average of the word vectors.
   """
 
-  def _read(self, data_tag):
-    # If the encodings exists they will not be generated again.
-    project_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), '..', '..')
-
-    self.paths[data_tag] = {'npy': os.path.join(
-        project_path, self._data_path(data_tag, '.npy'))}
-
-    if not os.path.exists(self.paths[data_tag]['npy']):
-      self.generate_average_word_embeddings(
-          os.path.join(project_path,
-                       self._data_path('vocab.chatbot.16384')),
-          self._data_path(self.tag + data_tag, '.txt'),
-          self.paths[data_tag]['npy'])
-
-    meaning_vectors = np.load(self.paths[data_tag]['npy'])
-
-    with open(self._data_path(
-            self.tag + data_tag, '.txt'), 'r', encoding='utf-8') as file:
-      for index, line in enumerate(file):
-        self.data_points[data_tag].append(self.DataPointClass(
-            line.strip(), index, False, meaning_vectors[index]))
-
-  def generate_average_word_embeddings(self,
+  def generate_embeddings(self,
                                        vocab_path,
                                        input_file_path,
                                        output_file_path):

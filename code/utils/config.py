@@ -18,7 +18,7 @@ class Config:
   clustering_method = 'mean_shift'  # Kmeans or mean_shift.
   bandwidth = 0.7  # Mean shift bandwidth.
   use_faiss = False  # Whether to use the library for GPU based clustering.
-  max_avg_length = 15 # Clusters with longer sentences won't get filtered.
+  max_avg_length = 15  # Clusters with longer sentences won't get filtered.
   max_medoid_length = 50  # Clusters with longer medoids won't get filtered.
 
   # Save this object to output dir.
