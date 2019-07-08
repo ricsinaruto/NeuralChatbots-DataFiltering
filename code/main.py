@@ -1,9 +1,9 @@
 import argparse
 
 from utils.config import Config
-#from filtering.average_word_embedding import AverageWordEmbedding
+from filtering.average_word_embedding import AverageWordEmbedding
 from filtering.identity import Identity
-#from filtering.sent2vec import Sent2vec
+from filtering.sent2vec import Sent2vec
 
 
 def main():
@@ -45,6 +45,10 @@ def main():
                       help='Whether to cluster only unique sentences ' +
                       '(default: %(default)s)',
                       metavar='', type=bool)
+  parser.add_argument('-vs', '--vocab_size',
+                      default=config.vocab_size,
+                      help='Vocab size, only used if vocab file not given',
+                      metavar='', type=int)
   parser.add_argument('-ft', '--filter_type', default=config.filter_type,
                       help='Filtering way (choices: %(choices)s)',
                       metavar='', choices=['source', 'target', 'both'])
@@ -85,8 +89,8 @@ def main():
 
   filter_problems = {
       'identity': Identity,
-      #'avg_embedding': AverageWordEmbedding,
-      #'sent2vec': Sent2vec,
+      'avg_embedding': AverageWordEmbedding,
+      'sent2vec': Sent2vec,
   }
 
   problem = filter_problems[config.cluster_type](config)

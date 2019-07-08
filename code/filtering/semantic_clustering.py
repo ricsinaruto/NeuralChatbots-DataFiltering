@@ -47,17 +47,22 @@ class SemanticClustering(filter_problem.FilterProblem):
   def DataPointClass(self):
     return DataPoint
 
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.unique_data = {"Source": [], "Target": []}
+
   def clustering(self, tag):
     '''
     Params:
       :tag: Whether it's source or target data.
     '''
+    data_points = self.unique_data if self.unique else self.data_points
     centroids = self.calculate_centroids(tag)
 
     data_point_vectors = np.array(
       [data_point.meaning_vector for data_point in
-       self.data_points[tag]]).reshape(
-       -1, self.data_points[tag][0].meaning_vector.shape[-1])
+       data_points[tag]]).reshape(
+       -1, data_points[tag][0].meaning_vector.shape[-1])
 
     # Get the actual data point for each centroid.
     tree = BallTree(data_point_vectors)
@@ -69,7 +74,7 @@ class SemanticClustering(filter_problem.FilterProblem):
     labels = labels.reshape(-1)
 
     # Build the list of clusters.
-    clusters = {index: self.ClusterClass(self.data_points[tag][index]) for
+    clusters = {index: self.ClusterClass(data_points[tag][index]) for
                 index in {labels[_index] for _index in range(len(labels))}}
     clusters = [(clusters[cluster_index], cluster_index) for cluster_index in
                 sorted(list(clusters))]
@@ -79,12 +84,26 @@ class SemanticClustering(filter_problem.FilterProblem):
 
     rev_tag = 'Target' if tag == 'Source' else 'Source'
 
+    # Store the cluster index for each unique sentence.
+    if self.unique:
+      cluster_ind_dict = {}
+      for data_point, cluster_index in zip(data_points[tag], labels):
+        cluster_ind_dict[data_point.string] = label_lookup[cluster_index]
+
+      # This is different for unique clustering.
+      for i, data_point in enumerate(self.data_points[tag]):
+        cl_index = cluster_ind_dict[data_point.string]
+        data_point.cluster_index = cl_index
+        clusters[cl_index].add_element(data_point)
+        clusters[cl_index].add_target(self.data_points[rev_tag][i])
+
     # Assign the actual clusters.
-    for dp, cl_index in zip(self.data_points[tag], labels):
-      cl_index = label_lookup[cl_index]
-      dp.cluster_index = cl_index
-      clusters[cl_index].add_element(dp)
-      clusters[cl_index].add_target(self.data_points[rev_tag][dp.index])
+    else:
+      for dp, cl_index in zip(self.data_points[tag], labels):
+        cl_index = label_lookup[cl_index]
+        dp.cluster_index = cl_index
+        clusters[cl_index].add_element(dp)
+        clusters[cl_index].add_target(self.data_points[rev_tag][dp.index])
 
     self.clusters[tag] = clusters
 
@@ -104,12 +123,19 @@ class SemanticClustering(filter_problem.FilterProblem):
 
     vector_path = os.path.join(self.input_dir, self.tag + tag + '.npy')
     if not os.path.exists(vector_path):
-      self.generate_embeddings(tag)
+      self.generate_embeddings(tag, vector_path)
 
     # Add vectors to sentences.
     sent_vectors = np.load(vector_path)
-    for index, dp in enumerate(self.data_points[tag]):
-      dp.meaning_vector = sent_vectors[index]
+    if not self.unique:
+      for index, dp in enumerate(self.data_points[tag]):
+        dp.meaning_vector = sent_vectors[index]
+    # Create unique data points if necessary.
+    else:
+      for i, sent in enumerate(set([s.string for s in self.data_points[tag]])):
+        self.unique_data[tag].append(self.DataPointClass(sent,
+                                                         i,
+                                                         sent_vectors[i]))
 
   # Has to be implemented by subclass to generate sentence embeddings.
   def generate_embeddings(self, tag):
@@ -121,7 +147,8 @@ class SemanticClustering(filter_problem.FilterProblem):
     Params:
       :tag: Whether it's source or target data.
     '''
-    matrix = np.stack([dp.meaning_vector for dp in self.data_points[tag]])
+    data_points = self.unique_data if self.unique else self.data_points
+    matrix = np.stack([dp.meaning_vector for dp in data_points[tag]])
 
     if self.config.clustering_method == 'kmeans':
       # Kmeans with either the faiss or the sklearn implementation.

@@ -10,8 +10,9 @@ class Config:
   source_clusters = 0
   target_clusters = 0
   filter_split = 'full'  # Which data split to filter.
-  cluster_type = 'identity'
-  unique = False  # Whether to cluster only unique sentences.
+  cluster_type = 'avg_embedding'
+  unique = True  # Whether to cluster only unique sentences.
+  vocab_size = 16384  # Only used for average word embeddings.
   filter_type = 'both'
   min_cluster_size = 4  # Clusters with fewer elements won't get filtered.
   threshold = 1.1  # Entropy threshold for filtering.
@@ -20,18 +21,22 @@ class Config:
   use_faiss = False  # Whether to use the library for GPU based clustering.
   max_avg_length = 15  # Clusters with longer sentences won't get filtered.
   max_medoid_length = 50  # Clusters with longer medoids won't get filtered.
+  project_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), '..', '..')
 
   # Save this object to output dir.
   def save(self):
-    if not os.path.exists(self.output_dir):
-      os.makedirs(self.output_dir)
+    out_dir = os.path.join(self.project_path, self.output_dir)
+    if not os.path.exists(out_dir):
+      os.makedirs(out_dir)
 
-    file = open(os.path.join(self.output_dir, 'config'), 'wb')
+    file = open(os.path.join(out_dir, 'config'), 'wb')
     file.write(pickle.dumps(self.__dict__))
     file.close()
 
   # Load from output dir.
   def load(self):
-    file = open(self.load_config, 'rb')
+    load_config = os.path.join(self.project_path, self.load_config)
+    file = open(load_config, 'rb')
     self.__dict__ = pickle.loads(file.read())
     file.close()

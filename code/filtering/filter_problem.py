@@ -1,4 +1,5 @@
 import os
+import sys
 import math
 from collections import Counter
 
@@ -16,7 +17,7 @@ class DataPoint:
       :index: Number of the line in the file from which this sentence was read.
     '''
     self.index = index
-    self.string = string.strip('\n')
+    self.string = ' '.join(string.strip('\n').split())
     self.cluster_index = 0
 
 
@@ -68,6 +69,7 @@ class FilterProblem:
     self.max_avg_length = config.max_avg_length
     self.max_medoid_length = config.max_medoid_length
     self.min_cluster_size = config.min_cluster_size
+    self.unique = config.unique
 
     self.project_path = os.path.join(
       os.path.dirname(os.path.abspath(__file__)), '..', '..')
@@ -90,8 +92,15 @@ class FilterProblem:
       :tag: 'Source' or 'Target'.
     '''
     splits = ['train', 'dev', 'test']
-    files = [open(os.path.join(self.input_dir, split + tag + '.txt')).read()
-             for split in splits]
+    try:
+      files = [open(os.path.join(self.input_dir, split + tag + '.txt')).read()
+               for split in splits]
+    except FileNotFoundError:
+      print('Data files not found in ' + self.input_dir)
+      print('The following files should be here:')
+      print('trainSource.txt\ntrainTarget.txt\ndevSource.txt\ndevTarget.txt')
+      print('testSource.txt\ntestTarget.txt')
+      sys.exit()
 
     full_path = os.path.join(self.input_dir, 'full' + tag + '.txt')
     if not os.path.exists(full_path):
