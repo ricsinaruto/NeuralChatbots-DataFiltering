@@ -1,12 +1,8 @@
-# Seq2seqChatbots
-### Papers
-#### [Deep Learning Based Chatbot Models](https://tdk.bme.hu/VIK/DownloadPaper/asdad)
-#### [Making Chatbots Better by Training on Less Data](https://www.researchgate.net/publication/327594109_Making_Chatbots_Better_by_Training_on_Less_Data)
-This repository contains the code that was written for experiments described in [this](https://tdk.bme.hu/VIK/DownloadPaper/asdad) paper, and also [data filtering](https://github.com/ricsinaruto/Seq2seqChatbots/tree/master#filter-data) methods and experiments for [this](https://www.researchgate.net/publication/327594109_Making_Chatbots_Better_by_Training_on_Less_Data) paper. Own problem, hparams and model registrations are written to the [tensor2tensor](https://github.com/tensorflow/tensor2tensor) library in order to try out different datasets with the [Transformer](https://arxiv.org/abs/1706.03762) modell for training dialog agents. The folders in the repository contain the following content:
-* **docs**: Latex files and pictures required to generate [this](https://tdk.bme.hu/VIK/DownloadPaper/asdad) and [this](https://www.researchgate.net/publication/327594109_Making_Chatbots_Better_by_Training_on_Less_Data).
-* **t2t_csaky**: This folder contains all the source code, more detailed description can be found lower.
-* **decode_dir**: Here you can find inference outputs from the various trainings that were run.
-* **wiki_images**: Contains images used for the [wiki](https://github.com/ricsinaruto/Seq2seqChatbots/wiki/Chatbot-and-Related-Research-Paper-Notes-with-Images), where I write about more than 100 publications related to chatbots.
+# NeuralChatbots-DataFiltering &middot; [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Paper](https://img.shields.io/badge/Presented%20at-ACL%202019-yellow.svg)](https://arxiv.org/abs/1905.05471)
+A lightweight repo for filtering dialog data with entropy-based methods.
+For training models check [Seq2seqChatbots](https://github.com/ricsinaruto/Seq2seqChatbots), and for evaluation code check [dialog-eval](https://github.com/ricsinaruto/dialog-eval).
+
+
 
 ## Quick Guide
 First, install all the required packages in your python environment:
@@ -29,6 +25,7 @@ You can control the flags and parameters of each mode directly in this file. Fur
 ### Generate Data
 This mode will download and preprocess the data and generate source and target pairs. Currently there are 6 registered problems, that you can use besides the ones given by tensor2tensor:
 * *[persona_chat_chatbot](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/problems/persona_chat_chatbot.py)*: This problem implements the [Persona-Chat](https://arxiv.org/pdf/1801.07243.pdf) dataset (without the use of personas).
+
 * *[daily_dialog_chatbot](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/problems/daily_dialog_chatbot.py)*: This problem implements the [DailyDialog](http://yanran.li/dailydialog.html) dataset (without the use of topics, dialog acts or emotions).
 * *[opensubtitles_chatbot](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/problems/opensubtitles_chatbot.py)*: This problem can be used to work with the [OpenSubtitles](http://opus.nlpl.eu/OpenSubtitles2018.php) dataset.
 * *[cornell_chatbot_basic](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/problems/cornell_chatbots.py)*: This problem implements the [Cornell Movie-Dialog Corpus](https://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html).
