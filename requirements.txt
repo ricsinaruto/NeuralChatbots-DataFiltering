@@ -1,5 +1,5 @@
-tensorflow-gpu
-tensor2tensor
-datasketch
 sklearn
 clint
+matplotlib
+numpy
+requests

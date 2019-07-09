@@ -1,5 +1,3 @@
-
-# My imports.
 from filtering.filter_problem import FilterProblem
 
 

@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.neighbors import BallTree
 from sklearn.cluster import MeanShift
 
-# My imports.
 from filtering import filter_problem
 from utils.config import Config
 
