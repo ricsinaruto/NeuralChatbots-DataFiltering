@@ -7,18 +7,18 @@ class Config:
   data_dir = 'data/DailyDialog/baseline'  # Directory containing dataset.
   output_dir = 'data/DailyDialog/baseline/filtered_data'
   load_config = None
-  source_clusters = 0
-  target_clusters = 0
+  source_clusters = 50
+  target_clusters = 15
   filter_split = 'full'  # Which data split to filter.
   cluster_type = 'avg_embedding'
-  unique = True  # Whether to cluster only unique sentences.
+  unique = False  # Whether to cluster only unique sentences.
   vocab_size = 16384  # Only used for average word embeddings.
   filter_type = 'both'
   min_cluster_size = 4  # Clusters with fewer elements won't get filtered.
   threshold = 1.1  # Entropy threshold for filtering.
-  clustering_method = 'mean_shift'  # Kmeans or mean_shift.
+  clustering_method = 'kmeans'  # Kmeans or mean_shift.
   bandwidth = 0.7  # Mean shift bandwidth.
-  use_faiss = False  # Whether to use the library for GPU based clustering.
+  use_faiss = True  # Whether to use the library for GPU based clustering.
   max_avg_length = 15  # Clusters with longer sentences won't get filtered.
   max_medoid_length = 50  # Clusters with longer medoids won't get filtered.
   project_path = os.path.join(
@@ -36,7 +36,7 @@ class Config:
 
   # Load from output dir.
   def load(self):
-    load_config = os.path.join(self.project_path, self.load_config)
+    load_config = os.path.join(self.project_path, self.load_config, 'config')
     file = open(load_config, 'rb')
     self.__dict__ = pickle.loads(file.read())
     file.close()
