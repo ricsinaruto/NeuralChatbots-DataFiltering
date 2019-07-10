@@ -122,6 +122,11 @@ class SemanticClustering(filter_problem.FilterProblem):
 
     vector_path = os.path.join(self.input_dir, self.tag + tag + '.npy')
     if not os.path.exists(vector_path):
+      print('No sentence embeddings found in ' + self.input_dir)
+      print('They should be named \'fullSource.npy\' and \'fullTarget.npy\',')
+      print('where each line is a vector corresponding to')
+      print('sentences in \'fullSource.txt\' and \'fullTarget.txt\'.')
+      print('Building sentence representations for ' + self.cluster_type)
       self.generate_embeddings(tag, vector_path)
 
     # Add vectors to sentences.
