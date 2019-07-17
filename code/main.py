@@ -32,7 +32,7 @@ def main():
   parser.add_argument('-ct', '--cluster_type', default=config.cluster_type,
                       help='Clustering method (choices: %(choices)s)',
                       metavar='',
-                      choices=['identity', 'avg_embedding', "sent2vec"])
+                      choices=['identity', 'avg_embedding', 'sent2vec'])
   parser.add_argument('-sc', '--source_clusters',
                       default=config.source_clusters,
                       help='Number of source clusters in case of Kmeans',
@@ -63,7 +63,7 @@ def main():
   parser.add_argument('-cm', '--clustering_method',
                       default=config.clustering_method,
                       help='Mean shift recommended (choices: %(choices)s)',
-                      metavar='', choices=['kmeans, mean_shift'])
+                      metavar='', choices=['kmeans', 'mean_shift'])
   parser.add_argument('-bw', '--bandwidth', default=config.bandwidth,
                       help='Mean shift bandwidth (default: %(default)s)',
                       metavar='', type=float)
