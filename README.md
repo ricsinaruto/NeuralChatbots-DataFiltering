@@ -1,6 +1,8 @@
 # NeuralChatbots-DataFiltering &middot; [![twitter](https://img.shields.io/twitter/url/https/shields.io.svg?style=social)](https://ctt.ac/E_jP6)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Paper](https://img.shields.io/badge/Presented%20at-ACL%202019-yellow.svg)](https://arxiv.org/abs/1905.05471) [![Code1](https://img.shields.io/badge/code-chatbot%20training-green.svg)](https://github.com/ricsinaruto/Seq2seqChatbots) [![Code2](https://img.shields.io/badge/code-evaluation-green.svg)](https://github.com/ricsinaruto/dialog-eval) [![documentation](https://img.shields.io/badge/documentation-on%20wiki-red.svg)](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki)  
-A lightweight repo for filtering dialog data with entropy-based methods.
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Paper](https://img.shields.io/badge/Presented%20at-ACL%202019-yellow.svg)](https://arxiv.org/abs/1905.05471) [![Poster](https://img.shields.io/badge/The-Poster-yellow.svg)](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) [![Code1](https://img.shields.io/badge/code-chatbot%20training-green.svg)](https://github.com/ricsinaruto/Seq2seqChatbots) [![Code2](https://img.shields.io/badge/code-evaluation-green.svg)](https://github.com/ricsinaruto/dialog-eval) [![documentation](https://img.shields.io/badge/documentation-on%20wiki-red.svg)](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki)  
+A lightweight repo for filtering dialog data with entropy-based methods.  
+  
+The program **reads the dataset**, runs **clustering** if needed, computes the **entropy** of individual utterances, and then **removes high entropy** utterances based on the threshold, and **saves the filtered dataset** to the output directory. See the [paper](https://arxiv.org/abs/1905.05471) or the [poster](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) for more details.
 
 ## Features
   :floppy_disk: &nbsp; Cluster and filter any dialog data that you provide, or use pre-downloaded datasets  
@@ -22,9 +24,18 @@ The main file can be called from anywhere, but when specifying paths to director
 ```
 python code/main.py -h
 ```
-<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/help.png" align="top" height="800" ></a>
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/help.png" align="top" height="800" ></a>    
+For the complete **documentation** visit the [wiki](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki).
 
-For the complete documentation visit the [wiki](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki).
+### Cluster Type
+* [identity](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/filtering/identity.py): In this method there is basically no clustering, the entropy of utterances is calculated based on the conditional probability of utterance pairs.
+* [avg-embedding](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/filtering/average_word_embedding.py): This clustering type uses average word embedding sentence representations as in [this paper](https://pdfs.semanticscholar.org/3fc9/7768dc0b36449ec377d6a4cad8827908d5b4.pdf).
+* [sent2vec](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/filtering/sent2vec.py): This clustering type should use [sent2vec](https://github.com/epfml/sent2vec) sentence embeddings, but currently uses any embeddings you provide to it.
+
+### Filter Type
+* **source**: Filters utterance pairs in which the source utterance's entropy is above the threshold.
+* **target**: Filters utterance pairs in which the target utterance's entropy is above the threshold.
+* **both**: Filters utterance pairs in which either the source or target utterance's entropy is above the threshold.
  
 ### Visualization
 Visualize clustering and filtering results by running the [visualization](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/utils/visualization.ipynb) jupyter notebook. The notebook is pretty self-explanatory, you just have to provide the directory containing the clustering files.
@@ -32,16 +43,42 @@ Visualize clustering and filtering results by running the [visualization](https:
 
 
 ## Results & Examples
+### High Entropy Utterances and Clusters from [DailyDialog](https://arxiv.org/abs/1710.03957)
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/cluster_examples.png" align="top" height="500" ></a>
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/high_entropy.png" align="top" height="500" ></a>  
+A high entropy cluster found by sent2vec.
 
+### [Transformer](https://arxiv.org/abs/1706.03762) Trained on [DailyDialog](https://arxiv.org/abs/1710.03957)
+For an explanation of the metrics please check [this repo](https://github.com/ricsinaruto/dialog-eval) or the [paper](https://arxiv.org/pdf/1905.05471.pdf).  
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/metrics_table.png" align="top" height="400" ></a>  
+  
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/example_responses.png" align="top" height="300" ></a>  
+More examples can be found in the appendix of the [paper](https://arxiv.org/pdf/1905.05471.pdf).
+
+### [Transformer](https://arxiv.org/abs/1706.03762) Trained on [Cornell](https://www.cs.cornell.edu/~cristian/Cornell_Movie-Dialogs_Corpus.html) and [Twitter](https://github.com/facebookresearch/ParlAI/tree/master/parlai/tasks/twitter)
+For an explanation of the metrics please check [this repo](https://github.com/ricsinaruto/dialog-eval) or the [paper](https://arxiv.org/pdf/1905.05471.pdf).  
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/other_datasets.png" align="top" height="400" ></a> 
 
 ## Contributing
+##### Check the [issues](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/issues) for some additions where help is appreciated. Any contributions are welcome :heart:
+##### Please try to follow the code syntax style used in the repo (flake8, 2 spaces indent, 80 char lines, commenting a lot, etc.)
+
 New clustering methods can also be added, by subclassing the [FilterProblem](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/data_filtering/filter_problem.py) class. This class contains a lot of functionality for clustering and filtering. If your clustering method is similar to others, you will only have to override the clustering function, which does the clustering of the data. Loading and saving data is taken care of, and the clustering should run on the *clusters* and *data_points* lists, which store the data in special [Cluster](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/data_filtering/filter_problem.py) and [DataPoint](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/data_filtering/filter_problem.py) objects. The latter represents one utterance from the dataset, but these can also be subclassed if additional functionality is needed. Finally the new class has to be added to the dictionary in the *data_filtering* function in [run](https://github.com/ricsinaruto/Seq2seqChatbots/blob/master/t2t_csaky/utils/run.py).
 
 ## Authors
+* **[Richard Csaky](ricsinaruto.github.io)** (If you need any help with running the code: ricsinaruto@hotmail.com)
+* **[Patrik Purgai](https://github.com/Mrpatekful)** (clustering part)
 
 ## License
-
-## Acknowledgments
-
-
-##### If you require any help with running the code or if you want the files of the trained models, write to this e-mail address. (ricsinaruto@hotmail.com)
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/LICENSE) file for details.  
+Please include a link to this repo if you use it in your work and consider citing the following paper:
+```
+@article{Csaky:2019,
+  title={Improving Neural Conversational Models with Entropy-Based Data Filtering},
+  author={Csaky, Richard and Purgai, Patrik and Recski, Gabor},
+  journal={arXiv preprint arXiv:1905.05471},
+  url={https://arxiv.org/pdf/1905.05471.pdf},
+  year={2019},
+  note={To appear at ACL 2019.}
+}
+```
