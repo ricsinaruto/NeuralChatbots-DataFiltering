@@ -70,8 +70,6 @@ Loading and saving data is taken care of, and you should use the [Cluster](https
 Finally add your class to the dictionary in [main](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/main.py#L90), and to the command-line argument choices.
 
 
-This class contains a lot of functionality for clustering and filtering. If your clustering method is similar to others, you will only have to override the clustering function, which does the clustering of the data. Loading and saving data is taken care of, and the clustering should run on the *clusters* and *data_points* lists, which store the data in special  The latter represents one utterance from the dataset, but these can also be subclassed if additional functionality is needed. 
-
 ## Authors
 * **[Richard Csaky](ricsinaruto.github.io)** (If you need any help with running the code: ricsinaruto@hotmail.com)
 * **[Patrik Purgai](https://github.com/Mrpatekful)** (clustering part)
