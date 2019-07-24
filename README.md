@@ -18,7 +18,7 @@ Run setup.py which installs required packages and steps you through downloading 
 ```
 python setup.py
 ```
-
+You can download all trained models used in [this](https://arxiv.org/abs/1905.05471) paper from [here](https://mega.nz/#!mI0iDCTI!qhKoBiQRY3rLg3K6nxAmd4ZMNEX4utFRvSby_0q2dwU). Each training contains two checkpoints, one for the validation loss minimum and another after 150 epochs. The data and the trainings folder structure match each other exactly.
 ## Usage
 The main file can be called from anywhere, but when specifying paths to directories you should give them from the root of the repository.
 ```
