@@ -36,8 +36,12 @@ For the complete **documentation** visit the [wiki](https://github.com/ricsinaru
 * **source**: Filters utterance pairs in which the source utterance's entropy is above the threshold.
 * **target**: Filters utterance pairs in which the target utterance's entropy is above the threshold.
 * **both**: Filters utterance pairs in which either the source or target utterance's entropy is above the threshold.
- 
-### Visualization
+
+### [Filtering Demo](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/utils/filtering_demo.ipynb)
+In this jupyter notebook you can easily try out the identity filtering method implemented in less than 40 lines, and it filters DailyDialog in a couple of seconds (you only need to provide a sources and targets file). In the second part of the notebook there are some cool visualizations for entropy, frequency and sentence length.  
+<a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/3d.png" align="top" height="400" ></a>
+
+### [Visualization](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/utils/visualization.ipynb)
 Visualize clustering and filtering results by running the [visualization](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/code/utils/visualization.ipynb) jupyter notebook. The notebook is pretty self-explanatory, you just have to provide the directory containing the clustering files.
 <a><img src="https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/docs/visu.png" align="top" height="300" ></a>
 
