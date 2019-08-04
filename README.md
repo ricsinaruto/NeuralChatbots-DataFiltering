@@ -1,8 +1,8 @@
 # NeuralChatbots-DataFiltering &middot; [![twitter](https://img.shields.io/twitter/url/https/shields.io.svg?style=social)](https://ctt.ac/E_jP6)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Paper](https://img.shields.io/badge/Presented%20at-ACL%202019-yellow.svg)](https://arxiv.org/abs/1905.05471) [![Poster](https://img.shields.io/badge/The-Poster-yellow.svg)](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) [![Code1](https://img.shields.io/badge/code-chatbot%20training-green.svg)](https://github.com/ricsinaruto/Seq2seqChatbots) [![Code2](https://img.shields.io/badge/code-evaluation-green.svg)](https://github.com/ricsinaruto/dialog-eval) [![documentation](https://img.shields.io/badge/documentation-on%20wiki-red.svg)](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki)  
+[![Paper](https://img.shields.io/badge/Presented%20at-ACL%202019-yellow.svg)](https://www.aclweb.org/anthology/P19-1567) [![Poster](https://img.shields.io/badge/The-Poster-yellow.svg)](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) [![Code1](https://img.shields.io/badge/code-chatbot%20training-green.svg)](https://github.com/ricsinaruto/Seq2seqChatbots) [![Code2](https://img.shields.io/badge/code-evaluation-green.svg)](https://github.com/ricsinaruto/dialog-eval) [![documentation](https://img.shields.io/badge/documentation-on%20wiki-red.svg)](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/wiki) [![blog](https://img.shields.io/badge/Blog-post-black.svg)](https://medium.com/@richardcsaky/neural-chatbots-are-dumb-65b6b40e9bd4)   
 A lightweight repo for filtering dialog data with entropy-based methods.  
   
-The program **reads the dataset**, runs **clustering** if needed, computes the **entropy** of individual utterances, and then **removes high entropy** utterances based on the threshold, and **saves the filtered dataset** to the output directory. See the [paper](https://arxiv.org/abs/1905.05471) or the [poster](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) for more details.
+The program **reads the dataset**, runs **clustering** if needed, computes the **entropy** of individual utterances, and then **removes high entropy** utterances based on the threshold, and **saves the filtered dataset** to the output directory. See the [paper](https://www.aclweb.org/anthology/P19-1567) or the [poster](https://ricsinaruto.github.io/website/docs/acl_poster_h.pdf) for more details.
 
 ## Features
   :floppy_disk: &nbsp; Cluster and filter any dialog data that you provide, or use pre-downloaded datasets  
@@ -18,7 +18,7 @@ Run setup.py which installs required packages and steps you through downloading 
 ```
 python setup.py
 ```
-You can download all trained models used in [this](https://arxiv.org/abs/1905.05471) paper from [here](https://mega.nz/#!mI0iDCTI!qhKoBiQRY3rLg3K6nxAmd4ZMNEX4utFRvSby_0q2dwU). Each training contains two checkpoints, one for the validation loss minimum and another after 150 epochs. The data and the trainings folder structure match each other exactly.
+You can download all trained models used in [this](https://www.aclweb.org/anthology/P19-1567) paper from [here](https://mega.nz/#!mI0iDCTI!qhKoBiQRY3rLg3K6nxAmd4ZMNEX4utFRvSby_0q2dwU). Each training contains two checkpoints, one for the validation loss minimum and another after 150 epochs. The data and the trainings folder structure match each other exactly.
 ## Usage
 The main file can be called from anywhere, but when specifying paths to directories you should give them from the root of the repository.
 ```
