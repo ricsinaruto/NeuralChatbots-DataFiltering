@@ -82,12 +82,17 @@ Finally add your class to the dictionary in [main](https://github.com/ricsinarut
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/ricsinaruto/NeuralChatbots-DataFiltering/blob/master/LICENSE) file for details.  
 Please include a link to this repo if you use it in your work and consider citing the following paper:
 ```
-@article{Csaky:2019,
-  title={Improving Neural Conversational Models with Entropy-Based Data Filtering},
-  author={Csaky, Richard and Purgai, Patrik and Recski, Gabor},
-  journal={arXiv preprint arXiv:1905.05471},
-  url={https://arxiv.org/pdf/1905.05471.pdf},
-  year={2019},
-  note={To appear at ACL 2019.}
+@inproceedings{Csaky:2019,
+    title = "Improving Neural Conversational Models with Entropy-Based Data Filtering",
+    author = "Cs{\'a}ky, Rich{\'a}rd  and
+      Purgai, Patrik  and
+      Recski, G{\'a}bor",
+    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/P19-1567",
+    pages = "5650--5669",
 }
 ```
