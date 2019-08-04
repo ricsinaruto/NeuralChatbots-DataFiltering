@@ -84,9 +84,7 @@ Please include a link to this repo if you use it in your work and consider citin
 ```
 @inproceedings{Csaky:2019,
     title = "Improving Neural Conversational Models with Entropy-Based Data Filtering",
-    author = "Cs{\'a}ky, Rich{\'a}rd  and
-      Purgai, Patrik  and
-      Recski, G{\'a}bor",
+    author = "Cs{\'a}ky, Rich{\'a}rd and Purgai, Patrik and Recski, G{\'a}bor",
     booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
     month = jul,
     year = "2019",
