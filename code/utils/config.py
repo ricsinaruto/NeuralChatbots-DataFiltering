@@ -5,12 +5,12 @@ import os
 # These can also be set as arguments via the command line.
 class Config:
   data_dir = 'data/DailyDialog/baseline'  # Directory containing dataset.
-  output_dir = 'data/DailyDialog/baseline/filtered_data'
+  output_dir = 'data/DailyDialog/baseline/filtered_data/avg_embedding'
   load_config = None
   source_clusters = 0
   target_clusters = 0
   filter_split = 'full'  # Which data split to filter.
-  cluster_type = 'identity'
+  cluster_type = 'avg_embedding'
   unique = False  # Whether to cluster only unique sentences.
   vocab_size = 16384  # Only used for average word embeddings.
   filter_type = 'both'

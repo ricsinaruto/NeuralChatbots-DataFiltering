@@ -138,6 +138,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+*.txt
 # Large files and folders
 private/
 data/

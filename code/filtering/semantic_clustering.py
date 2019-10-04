@@ -126,7 +126,7 @@ class SemanticClustering(filter_problem.FilterProblem):
       print('They should be named \'fullSource.npy\' and \'fullTarget.npy\',')
       print('where each line is a vector corresponding to')
       print('sentences in \'fullSource.txt\' and \'fullTarget.txt\'.')
-      print('Building sentence representations for ' + self.cluster_type)
+      print('Building sentence representations of ' + self.config.cluster_type)
       self.generate_embeddings(tag, vector_path)
 
     # Add vectors to sentences.
